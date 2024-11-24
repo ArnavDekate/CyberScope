@@ -80,7 +80,7 @@ body {
   justify-content: center;
   padding: 0 5%;
   overflow: hidden;
-  background-image: url('D:\CyberScope\frontend\CyberScope\src\assets\cyber7.jpg');
+  background-image: url('./assets/Cyber7.jpg');
   background-size: cover;
   background-position: center;
   color: #fff;
