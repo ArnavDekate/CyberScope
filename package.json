@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cheerio": "^1.0.0",
+    "chromedriver": "^130.0.4",
+    "driver": "^1.0.0",
+    "natural": "^8.0.1",
+    "node-summary": "^1.1.0",
+    "pg": "^8.13.1",
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.26.0",
+    "summarizer": "^1.0.0",
+    "web": "^0.0.2"
+  }
+}
