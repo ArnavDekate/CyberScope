@@ -1,68 +1,246 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/* index.css */
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+/* Basic Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+  color: #fff;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Navigation Bar */
+.navbar {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 3rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100%;
+  z-index: 10;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.navbar h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.navbar h1 span {
+  color: #00ffc3;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar ul li a {
+  text-decoration: none;
+  color: #fff;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  font-size: 1rem;
+  transition: color 0.3s;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.navbar ul li a:hover {
+  color: #00ffc3;
+}
+
+/* Join Button */
+.join-btn {
+  padding: 0.5rem 1.5rem;
+  border: 2px solid #00ffc3;
+  border-radius: 20px;
+  color: #00ffc3;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.join-btn:hover {
+  background-color: #00ffc3;
+  color: #000;
+}
+
+/* Showcase Section */
+.showcase {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 5%;
+  overflow: hidden;
+  background-image: url('D:\CyberScope\frontend\CyberScope\src\assets\cyber7.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+  text-align: center;
+}
+
+.content {
+  max-width: 600px;
+  animation: fadeIn 1s ease-in-out;
+  z-index: 1;
+}
+
+.overlay-text {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border-radius: 5px;
+}
+
+.overlay-text h2 {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  color: #00ffc3;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s, color 0.3s;
+}
+
+/* Hover Effect for Heading */
+.overlay-text h2:hover {
+  color: #fff;
+  transform: scale(1.05);
+  text-shadow: 4px 4px 15px rgba(0, 255, 195, 0.7);
+}
+
+.content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 2rem;
+}
+
+/* Section Styling */
+section {
+  padding: 4rem 2rem;
+}
+
+.services-section, .about-section, .review-section {
+  text-align: center;
+  background-color: #111;
+  color: #ccc;
+}
+
+h2.section-title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: #00ffc3;
+}
+
+/* Services Section */
+.services-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.service-card {
+  background-color: #222;
+  border: 2px solid #00ffc3;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 320px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.service-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(0, 255, 195, 0.4);
+}
+
+.service-card:hover img {
+  transform: scale(1.1);
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  color: #00ffc3;
+  text-align: center;
+}
+
+.service-card p {
+  color: #ccc;
+  text-align: center;
+  padding: 0 1rem 1rem;
+}
+
+/* About Section */
+.about-section {
+  background: linear-gradient(135deg, #000, #111);
+  color: #ccc;
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0px 4px 20px rgba(0, 255, 195, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-container:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 6px 25px rgba(0, 255, 195, 0.5);
+}
+
+.about-section p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.about-section p:hover {
+  color: #00ffc3;
+}
+
+/* Review Section */
+.review-section .review-card {
+  background-color: #222;
+  padding: 1rem;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 1rem auto;
+  color: #fff;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+  100% {
+      opacity: 1;
+      transform: translateY(0);
   }
 }
