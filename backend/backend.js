@@ -45,11 +45,28 @@ function isMeaningfulText(text) {
 }
 
 // Summarize text using node-summary
-async function summarizeText(text) {
+// async function summarizeText(text) {
+//   return new Promise((resolve, reject) => {
+//     summary.summarize('', text, (err, summarizedText) => {
+//       if (err) reject(err);
+//       else resolve(summarizedText || text);
+//     });
+//   });
+// }
+
+async function summarizeText(text, maxLength = 200) {
   return new Promise((resolve, reject) => {
     summary.summarize('', text, (err, summarizedText) => {
-      if (err) reject(err);
-      else resolve(summarizedText || text);
+      if (err) {
+        reject(err);
+      } else {
+        let result = summarizedText || text;
+        if (result.length > maxLength) {
+          // Truncate to the nearest word within maxLength
+          result = result.substring(0, maxLength).replace(/\s+\S*$/, '') + '...';
+        }
+        resolve(result);
+      }
     });
   });
 }
