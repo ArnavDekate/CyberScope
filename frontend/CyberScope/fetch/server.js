@@ -27,7 +27,7 @@ app.get("/", (req, res) => {
 // Route to fetch all incidents
 app.get("/api/incidents", async (req, res) => {
   try {
-    const result = await pool.query("SELECT id, text, url, to_char(timestamp, 'YYYY-MM-DD') AS date FROM incidents ORDER BY date DESC");
+    const result = await pool.query("SELECT id, text, url, to_char(timestamp, 'YYYY-MM-DD HH24:MI') AS date FROM incidents ORDER BY date DESC");
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching incidents:", error);
