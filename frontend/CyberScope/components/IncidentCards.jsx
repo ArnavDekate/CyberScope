@@ -24,8 +24,8 @@ const IncidentsCard = () => {
       <div className="incidents-grid">
         {incidents.length > 0 ? (
           incidents.map((incident) => (
-            <div className="incident-card" key={incident.id}>
-              <h3>Incident #{incident.id}</h3>
+            <div className="incident-card" key={incident.title}>
+              <h3>{incident.title}</h3>
               <small>
                 {incident.date
                   ? new Date(incident.date).toLocaleDateString()

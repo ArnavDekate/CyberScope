@@ -20,14 +20,64 @@ db.connect();
 
 // Set up the Naive Bayes classifier with the natural library
 const classifier = new natural.BayesClassifier();
-classifier.addDocument('cybersecurity incident report', 'relevant');
-classifier.addDocument('security breach', 'relevant');
-classifier.addDocument('vulnerability', 'relevant');
-classifier.addDocument('security threats', 'relevant');
-classifier.addDocument('general news', 'irrelevant');
-classifier.addDocument('health news', 'irrelevant');
-classifier.addDocument('sports news', 'irrelevant');
+
+// Relevant keywords
+const relevantKeywords = [
+  'cybersecurity', 'incident', 'breach', 'vulnerability', 'malware', 
+  'threat', 'ransomware', 'phishing', 'zero-day', 'exploit',
+  'DDoS', 'hacker', 'encryption', 'data breach', 'unauthorized access',
+  'security flaw', 'password leak', 'network compromise', 'cyberattack',
+  'state-sponsored attack', 'cyber threat', 'patch', 'critical vulnerability',
+  'attack surface', 'botnet', 'keylogger', 'spyware', 'worm', 'rootkit',
+  'trojan', 'denial of service', 'identity theft', 'cyber crime',
+  'firewall breach', 'security alert', 'authentication bypass', 'backdoor',
+  'cyber espionage', 'security audit', 'data leak', 'zero-trust', 
+  'threat intelligence', 'SOC', 'endpoint protection', 'SIEM', 'APT', 
+  'mitigation', 'patch management', 'cyber hygiene', 'red team', 'blue team',
+  'ethical hacking', 'CVE', 'CISO', 'cyber defense', 'forensics',
+  'penetration testing', 'social engineering', 'business email compromise',
+  'attack vector', 'threat landscape', 'ransom demand', 'supply chain attack',
+  'privilege escalation', 'payload', 'buffer overflow', 'data exfiltration',
+  'cybersecurity framework', 'sensitive data', 'breach response',
+  'incident management', 'cyber resilience', 'digital forensics',
+  'threat actor', 'hacking campaign', 'insider threat', 'privileged account',
+  'network intrusion', 'threat modeling', 'honeypot', 'penetration test',
+  'security assessment', 'threat mitigation', 'vulnerability assessment',
+  'cyber risk', 'patch deployment', 'code injection', 'API attack', 'DNS attack'
+];
+
+// Add relevant keywords
+relevantKeywords.forEach(keyword => classifier.addDocument(keyword, 'relevant'));
+
+// Irrelevant keywords
+const irrelevantKeywords = [
+  'sports', 'entertainment', 'movies', 'celebrity', 'weather', 
+  'politics', 'economy', 'fashion', 'travel', 'music', 'art',
+  'technology trends', 'book review', 'festival', 'food', 
+  'wildlife', 'community', 'education', 'shopping', 'gadgets', 
+  'fitness', 'health', 'local news', 'international news',
+  'culture', 'dining', 'architecture', 'nature', 'camping',
+  'fishing', 'hiking', 'dance', 'photography', 'gardening',
+  'home improvement', 'beauty tips', 'family', 'parenting',
+  'crafts', 'vehicles', 'real estate', 'startup', 'business news',
+  'personal finance', 'stock market', 'investments', 'taxation',
+  'law', 'religion', 'history', 'space exploration', 'literature',
+  'new restaurant', 'festival guide', 'travel guide', 'weather update',
+  'sports tournament', 'fashion trends', 'music concert', 'art gallery',
+  'dog training', 'cat breeds', 'bird watching', 'nature walks',
+  'movie release', 'film festival', 'TV series', 'book fair',
+  'music awards', 'food festival', 'cycling', 'yoga', 'meditation',
+  'local market', 'new bakery', 'community events', 'stock analysis',
+  'real estate trends', 'political debates', 'weather forecast',
+  'celebrity gossip', 'new video game', 'gaming', 'comic books'
+];
+
+// Add irrelevant keywords
+irrelevantKeywords.forEach(keyword => classifier.addDocument(keyword, 'irrelevant'));
+
+// Train the classifier
 classifier.train();
+
 
 // Function to cleanse text by removing problematic characters
 function cleanseText(text) {
@@ -40,21 +90,11 @@ function isMeaningfulText(text) {
   const words = text.split(/\s+/);
   if (words.length < 10) return false;
 
-  const keywords = ['breach', 'malware', 'cybersecurity', 'vulnerability', 'threat'];
-  return keywords.some(keyword => text.toLowerCase().includes(keyword));
+  return true;
 }
 
 // Summarize text using node-summary
-// async function summarizeText(text) {
-//   return new Promise((resolve, reject) => {
-//     summary.summarize('', text, (err, summarizedText) => {
-//       if (err) reject(err);
-//       else resolve(summarizedText || text);
-//     });
-//   });
-// }
-
-async function summarizeText(text, maxLength = 200) {
+async function summarizeText(text, maxLength = 300) {
   return new Promise((resolve, reject) => {
     summary.summarize('', text, (err, summarizedText) => {
       if (err) {
@@ -78,15 +118,15 @@ function classifyText(text) {
 }
 
 // Function to store relevant data in PostgreSQL
-async function storeInDatabase(url, text) {
-  const summarizedText = await summarizeText(text); // Summarize before storing
+async function storeInDatabase(url, title, text) {
+  const summarizedText = await summarizeText(text); // Summarize only for storage, not classification
   const query = `
-    INSERT INTO incidents (url, text, timestamp)
-    VALUES ($1, $2, NOW())
+    INSERT INTO incidents (url, title, text, timestamp)
+    VALUES ($1, $2, $3, NOW())
   `;
   try {
-    await db.query(query, [url, summarizedText]);
-    console.log(`Stored summarized incident from ${url} in database.`);
+    await db.query(query, [url, title, summarizedText]);
+    console.log(`Stored summarized incident from ${url} in database with title "${title}".`);
   } catch (error) {
     console.error(`Error storing data in database:`, error.message);
   }
@@ -102,8 +142,10 @@ async function scrapeDataFromLink(driver, url) {
     let content = await driver.findElement(By.css('body')).getText();
     const cleanedContent = cleanseText(content);
 
+    // First classify using the full text before summarizing
     if (isMeaningfulText(cleanedContent) && classifyText(cleanedContent)) {
-      await storeInDatabase(url, cleanedContent);
+      // If classified as relevant, store it in the database
+      await storeInDatabase(url, title, cleanedContent);
     } else {
       console.log(`URL ${url} classified as irrelevant or non-meaningful.`);
     }
@@ -111,6 +153,7 @@ async function scrapeDataFromLink(driver, url) {
     console.error(`Error scraping data from ${url}:`, error);
   }
 }
+
 
 // Function to perform the Link Extraction
 async function scrapeLinks(query) {
@@ -166,7 +209,7 @@ async function generateInsights() {
 
 // Run the main functions
 (async () => {
-  const query = 'cyber threats incidents site:nciipc.gov.in OR site:gov.in';
+  const query = 'cyber threats incidents site:gov.in';
   await scrapeLinks(query);
   await generateInsights();
   db.end();
