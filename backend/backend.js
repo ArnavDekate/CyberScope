@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const { Builder, By, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
-const summary = require('node-summary'); // Alternative summarizer
+const summary = require('node-summary'); 
 
 // Configure PostgreSQL connection
 const db = new Client({
@@ -50,24 +50,25 @@ const relevantKeywords = [
 relevantKeywords.forEach(keyword => classifier.addDocument(keyword, 'relevant'));
 
 // Irrelevant keywords
-const irrelevantKeywords = ['error','ERROR','service', 'unavilable',
+const irrelevantKeywords = [
   'sports', 'entertainment', 'movies', 'celebrity', 'weather', 
   'politics', 'economy', 'fashion', 'travel', 'music', 'art',
   'technology trends', 'book review', 'festival', 'food', 
   'wildlife', 'community', 'education', 'shopping', 'gadgets', 
-  'fitness', 'health', 'local news', 'international news',
+  'fitness', 'health','error','ERROR','service', 'unavilable', 
+  'local news', 'international news','academic','adventure',
   'culture', 'dining', 'architecture', 'nature', 'camping',
   'fishing', 'hiking', 'dance', 'photography', 'gardening',
   'home improvement', 'beauty tips', 'family', 'parenting',
-  'crafts', 'vehicles', 'real estate', 'startup', 'business news',
+  'crafts', 'vehicles', 'real estate', , 'business news',
   'personal finance', 'stock market', 'investments', 'taxation',
   'law', 'religion', 'history', 'space exploration', 'literature',
   'new restaurant', 'festival guide', 'travel guide', 'weather update',
-  'sports tournament', 'fashion trends', 'music concert', 'art gallery',
+  'sports tournament', 'fashion', 'music concert', 'art gallery',
   'dog training', 'cat breeds', 'bird watching', 'nature walks',
   'movie release', 'film festival', 'TV series', 'book fair',
   'music awards', 'food festival', 'cycling', 'yoga', 'meditation',
-  'local market', 'new bakery', 'community events', 'stock analysis',
+  'local market', 'community events', 'stock analysis',
   'real estate trends', 'political debates', 'weather forecast',
   'celebrity gossip', 'new video game', 'gaming', 'comic books'
 ];
