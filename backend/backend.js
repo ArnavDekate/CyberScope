@@ -50,7 +50,7 @@ const relevantKeywords = [
 relevantKeywords.forEach(keyword => classifier.addDocument(keyword, 'relevant'));
 
 // Irrelevant keywords
-const irrelevantKeywords = [
+const irrelevantKeywords = ['error','ERROR','service', 'unavilable',
   'sports', 'entertainment', 'movies', 'celebrity', 'weather', 
   'politics', 'economy', 'fashion', 'travel', 'music', 'art',
   'technology trends', 'book review', 'festival', 'food', 
@@ -209,7 +209,7 @@ async function generateInsights() {
 
 // Run the main functions
 (async () => {
-  const query = 'cyber threats incidents site:gov.in';
+  const query = 'cyber incidents site:gov.in';
   await scrapeLinks(query);
   await generateInsights();
   db.end();
