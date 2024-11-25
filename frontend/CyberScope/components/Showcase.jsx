@@ -7,7 +7,7 @@ const Showcase = () => {
         <div className="overlay-text">
           <h2>Search for the new<br />Cyber Threat near You</h2>
         </div>
-        <p>
+        <p id='subhome'>
           Explore our offerings to protect against potential cyber threats and
           learn to strengthen your digital resilience.
         </p>

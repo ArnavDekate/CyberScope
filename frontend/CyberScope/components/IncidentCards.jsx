@@ -19,7 +19,7 @@ const IncidentsCard = () => {
   }, []);
 
   return (
-    <section className="incidents-section">
+    <section className="incidents-section" id="cards">
       <h2 className="section-title">Recent Cybersecurity Updates</h2>
       <div className="incidents-grid">
         {incidents.length > 0 ? (
