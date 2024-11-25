@@ -1,4 +1,4 @@
-# CyberScope: Real-Time Cyber Threat Intelligence Platform
+# CyberScope: Real-Time Insights into Cyber Incidents
 
 This project aims to develop a **web-based platform** that autonomously collects, structures, and presents **cyber incident data** relevant to Indian cyberspace. The platform is designed to support the **National Critical Information Infrastructure Protection Centre (NCIIPC)** by enabling **better threat assessment and response**. The project was developed as part of the Smart India Hackathon (SIH) 2024.
 
@@ -58,14 +58,6 @@ In an era where cyber threats are becoming more sophisticated, it is crucial to 
    npm start
    ```
 
-## Usage
 
-- Open the platform at `http://localhost:3000`.
-- Use the interactive dashboard to explore real-time cyber incident data.
-- Filter incidents by type, source, and date to generate specific reports.
-  
-## License
-
-This project is licensed under the MIT License. See the LICENSE file for details.
 
 
