@@ -1,5 +1,4 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
+
 const natural = require('natural');
 const { Client } = require('pg');
 const fs = require('fs');
